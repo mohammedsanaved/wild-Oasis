@@ -11,6 +11,15 @@ const StyledSidebar = styled.aside`
     display: flex;
     flex-direction: column;
     gap: 3.2rem;
+    @media (max-width: 768px) {
+    /* This media query will hide the text on screens larger than 768px (laptop and tablet viewports) */
+    padding: 1.2rem 1.2rem;
+    gap:1.5rem;
+    align-items: flex-start;
+    width: fit-content;
+    max-width: 100%;
+  }
+  
 `
 const Sidebar = () => {
   return (
@@ -21,4 +30,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default Sidebar;

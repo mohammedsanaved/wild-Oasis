@@ -44,6 +44,12 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-grey-400);
     transition: all 0.3s;
   }
+  @media (max-width: 768px) {
+    /* This media query will hide the text on screens larger than 768px (laptop and tablet viewports) */
+    span {
+      display: none;
+    }
+  }
 
   &:hover svg,
   &:active svg,
@@ -60,31 +66,31 @@ function MainNav() {
         <li>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />
-            <span>Home</span>
+            <span >Home</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/bookings">
             <HiOutlineCalendarDays />
-            <span>Bookings</span>
+            <span >Bookings</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/cabins">
             <HiOutlineHomeModern />
-            <span>Cabins</span>
+            <span >Cabins</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/users">
             <HiOutlineUsers />
-            <span>Users</span>
+            <span >Users</span>
           </StyledNavLink>
         </li>
         <li>
           <StyledNavLink to="/settings">
             <HiOutlineCog6Tooth />
-            <span>Settings</span>
+            <span >Settings</span>
           </StyledNavLink>
         </li>
       </NavList>

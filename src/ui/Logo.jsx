@@ -2,12 +2,20 @@ import styled from "styled-components";
 
 const StyledLogo = styled.div`
   text-align: center;
+  align-items: center;
 `;
 
 const Img = styled.img`
-  height: 9.6rem;
+  height: 11.6rem;
   width: auto;
+  @media (max-width: 768px) {
+    /* This media query will hide the text on screens larger than 768px (laptop and tablet viewports) */
+    height: 5.9rem;
+    padding: .2rem;
+    width: auto;
+  }
 `;
+
 
 function Logo() {
   return (
