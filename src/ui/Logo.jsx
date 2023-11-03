@@ -10,8 +10,8 @@ const Img = styled.img`
   width: auto;
   @media (max-width: 768px) {
     /* This media query will hide the text on screens larger than 768px (laptop and tablet viewports) */
-    height: 5.9rem;
-    padding: .2rem;
+    height: 4.9rem;
+    padding: .4rem;
     width: auto;
   }
 `;
