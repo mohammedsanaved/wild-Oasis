@@ -5,7 +5,10 @@ import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
-
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createCabin } from "../../services/apiCabins";
+import toast from "react-hot-toast";
 const FormRow = styled.div`
   display: grid;
   align-items: center;
@@ -43,31 +46,48 @@ const Error = styled.span`
 `;
 
 function CreateCabinForm() {
+  const {register, handleSubmit, reset} = useForm();
+  const queryClient = useQueryClient();
+  const {mutate, isLoading:isCreating} = useMutation({
+    mutationFn: createCabin,
+    onSuccess: ()=> {
+      toast.success("New Cabin Data created")
+      queryClient.invalidateQueries({queryKey: ["cabin"]})
+      reset()
+    },
+    onError: (err)=> toast.error(err.message) 
+  });
+  
+  // ---------------------------submitHandler---------------------------------
+  function submitHandler (data) {
+    // console.log(data)
+    mutate(data)
+  }
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(submitHandler)}>
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
-        <Input type="text" id="name" />
+        <Input type="text" id="name" {...register("name")} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input type="number" id="maxCapacity" />
+        <Input type="number" id="maxCapacity" {...register("maxCapacity")} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="regularPrice">Regular price</Label>
-        <Input type="number" id="regularPrice" />
+        <Input type="number" id="regularPrice" {...register("regularPrice")} />
       </FormRow>
 
       <FormRow>
-        <Label htmlFor="discount">Discount</Label>
-        <Input type="number" id="discount" defaultValue={0} />
+        <Label htmlFor="discountPrice">Discount</Label>
+        <Input type="number" id="discountPrice" defaultValue={0} {...register("discountPrice")} />
       </FormRow>
 
       <FormRow>
         <Label htmlFor="description">Description for website</Label>
-        <Textarea type="number" id="description" defaultValue="" />
+        <Textarea type="number" id="description" defaultValue="" {...register("description")} />
       </FormRow>
 
       <FormRow>
@@ -80,7 +100,7 @@ function CreateCabinForm() {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Edit cabin</Button>
+        <Button disabled={isCreating}>Create cabin</Button>
       </FormRow>
     </Form>
   );

@@ -14,6 +14,12 @@ const Img = styled.img`
     padding: .4rem;
     width: auto;
   }
+  @media (max-width: 425px) {
+    /* This media query will hide the text on screens larger than 768px (laptop and tablet viewports) */
+    height: 1.9rem;
+    padding: .2rem;
+    width: auto;
+  }
 `;
 
 
