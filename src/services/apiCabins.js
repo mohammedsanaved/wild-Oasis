@@ -13,19 +13,32 @@ if(error) {
 }
 return data;
 }
-export const createCabin = async(newCabin)=> {
+export const createEditCabin = async(newCabin, id)=> {
+  console.log(newCabin, id)
     // https://qvwufnxwuwwvovaxiawy.supabase.co/storage/v1/object/public/cabins-images/cabin-001.jpg
+    const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl)
     const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll("/","");
-    const imagePath = `${supabaseUrl}/storage/v1/object/public/cabins-images/${imageName}`
+    const imagePath = hasImagePath ? newCabin.image : `${supabaseUrl}/storage/v1/object/public/cabins-images/${imageName}`
 
-const { data, error } = await supabase
-.from('cabins')
-.insert([{...newCabin, image: imagePath}])
-.select()
+    let query = supabase.from('cabins')
+    //this is for create 
+    if(!id) query = query.insert([{...newCabin, image: imagePath}])
+
+
+//this is for edit
+if(id) query = query
+  .update({...newCabin, image: imagePath})
+  .eq('id',id)
+  .select()
+          
+
+const { data, error } = await query.select()
+.single()
 if(error) {
     console.warn(error);
     throw new Error("Cabin could not be created")
 }
+
 //upload Image from selected
 const { error:storageError } = await supabase
   .storage
@@ -47,6 +60,7 @@ throw new Error('Cabin image could not be uploaded & the cabin is not Created')
 return data
 } 
 export const deleteCabin = async (id)=> {
+  console.log(id)
 
 const { data, error } = await supabase
 .from('cabins')
