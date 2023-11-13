@@ -1,29 +1,33 @@
-import Spinner from 'ui/Spinner';
-import { useSettings } from 'features/settings/useSettings';
-import { useUpdateSetting } from 'features/settings/useUpdateSetting';
+import Spinner from "../../ui/Spinner";
+// import { useSettings } from 'features/settings/useSettings';
+import { useSettings } from './useSettings';
+// import { useUpdateSetting } from 'features/settings/useUpdateSetting';
 
-import Form from 'ui/Form';
-import FormRow from 'ui/FormRow';
-import Input from 'ui/Input';
+import Form from '../../ui/Form';
+import FormRow from "../../ui/FormRow"
+import Input from '../../ui/Input';
+import { useUpdateSettings } from "./useUpdateSettings";
 
 function UpdateSettingsForm() {
+  // const {settings, isLoading} = useSettings();
   const {
-    settings: {
+    setting: {
       minBookingLength,
       maxBookingLength,
-      maxGuestsPerBooking,
+      // maxGuestsPerBooking,
+      maxGuestPerBooking,
       breakfastPrice,
     } = {},
     isLoading,
   } = useSettings();
-  const { mutate: updateSetting, isLoading: isUpdating } = useUpdateSetting();
+  const { updateSetting, isLoading: isUpdating } = useUpdateSettings();
 
   // return <Spinner />;
   if (isLoading) return <Spinner />;
 
   function handleBlur(e, field) {
     const { value } = e.target;
-
+    console.log(value)
     if (!value) return;
     updateSetting({ [field]: value });
   }
@@ -52,8 +56,9 @@ function UpdateSettingsForm() {
       <FormRow label='Maximum guests/booking'>
         <Input
           type='number'
-          defaultValue={maxGuestsPerBooking}
-          onBlur={(e) => handleBlur(e, 'maxGuestsPerBooking')}
+          defaultValue={maxGuestPerBooking
+          }
+          onBlur={(e) => handleBlur(e, 'maxGuestPerBooking')}
           disabled={isUpdating}
           id='max-guests'
         />
@@ -72,3 +77,4 @@ function UpdateSettingsForm() {
 }
 
 export default UpdateSettingsForm;
+
