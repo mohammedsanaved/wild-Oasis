@@ -38,6 +38,7 @@ if(error) {
     console.warn(error);
     throw new Error("Cabin could not be created")
 }
+if(hasImagePath) return data;
 
 //upload Image from selected
 const { error:storageError } = await supabase

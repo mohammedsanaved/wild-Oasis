@@ -44,7 +44,9 @@ function CreateCabinForm({cabinToEdit = {}}) {
   const {id: editId, ...editValue} = cabinToEdit;
   const isEditSession = Boolean(editId);
   const {register, handleSubmit, reset, getValues, formState} = useForm({
-    defaultValues: isEditSession ? editValue : {}
+    defaultValues: isEditSession ? editValue : {},
+    discountPrice: Number(editValue.discountPrice) || 0,
+    regularPrice: Number(editValue.regularPrice) || 0,
   });
   const {errors} = formState
   console.log(errors)
@@ -55,7 +57,7 @@ function CreateCabinForm({cabinToEdit = {}}) {
   
   // ---------------------------submitHandler---------------------------------
   function submitHandler (data) {
-    console.log(data)
+    console.log("typeof discountPrice",typeof data.discountPrice)
     const image = typeof data.image === "string" ? data.image : data.image[0];
     if(isEditSession) editCabin({newCabinData: {...data, image}, id:editId },{
       onSuccess: (data)=> {
@@ -81,11 +83,6 @@ function CreateCabinForm({cabinToEdit = {}}) {
           required: "This field is required"
         })} />
       </FormRow>
-      {/* <FormRow label={'Cabin Name'} error={errors?.name?.message}>
-      <Input type="text" id="name" {...register("name", {
-          required: "This field is required"
-        })} />
-      </FormRow> */}
       <FormRow label={'Maximum Capacity'} error={errors?.maxCapacity?.message}>
         <Input disabled={isWorking} type="number" id="maxCapacity" {...register("maxCapacity", {
           required: "This field is required",
