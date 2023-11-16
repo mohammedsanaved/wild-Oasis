@@ -19,7 +19,9 @@ const Main = styled.main`
   overflow: scroll;
   @media (max-width: 768px) {
     /* This media query will hide the text on screens larger than 768px (laptop and tablet viewports) */
+    /* overflow-x: scroll; */
     overflow: scroll;
+    /* overflow-x: scroll; */
     padding: 2rem 3.8rem 4.4rem;
   }
 `;

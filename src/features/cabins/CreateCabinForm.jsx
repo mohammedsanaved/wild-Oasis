@@ -18,6 +18,10 @@ const FormRow2 = styled.div`
   align-items: center;
   grid-template-columns: 24rem 1fr 1.2fr;
   gap: 2.4rem;
+  /* @media (min-width: 425px) {
+    grid-auto-rows: -1rem 1fr 1.2fr;
+    gap: 0;
+  } */
 
   padding: 1.2rem 0;
 
@@ -40,7 +44,7 @@ const FormRow2 = styled.div`
   }
 `;
 
-function CreateCabinForm({cabinToEdit = {}}) {
+function CreateCabinForm({cabinToEdit = {},onCloseModel}) {
   const {id: editId, ...editValue} = cabinToEdit;
   const isEditSession = Boolean(editId);
   const {register, handleSubmit, reset, getValues, formState} = useForm({
@@ -63,12 +67,14 @@ function CreateCabinForm({cabinToEdit = {}}) {
       onSuccess: (data)=> {
         console.log("data from createCabin",data)
         reset()
+        onCloseModel?.()
       }
     });
     else createCabin({...data, image: image}, {
       onSuccess: (data)=> {
         console.log("data from createCabin",data)
         reset()
+        onCloseModel?.()
       }
     })
   }
@@ -77,7 +83,7 @@ function CreateCabinForm({cabinToEdit = {}}) {
 
   }
   return (
-    <Form onSubmit={handleSubmit(submitHandler, onError)}>
+    <Form onSubmit={handleSubmit(submitHandler, onError)} type={onCloseModel ? "model" : "regular"}>
       <FormRow label={'Cabin Name'} error={errors?.name?.message}>
       <Input disabled={isCreating} type="text" id="name" {...register("name", {
           required: "This field is required"
@@ -127,7 +133,7 @@ function CreateCabinForm({cabinToEdit = {}}) {
 
       <FormRow2>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" onClick={()=> onCloseModel?.()}>
           Cancel
         </Button>
         <Button disabled={isWorking}>{isEditSession ? 'Edit Cabin': "Create New Cabin"}</Button>
