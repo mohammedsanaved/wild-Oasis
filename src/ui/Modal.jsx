@@ -16,7 +16,7 @@ const StyledModal = styled.div`
   transition: all 0.5s;
   @media (max-width: 768px) {
     padding: 4.2rem 2rem;
-  }
+  } 
 `;
 
 const Overlay = styled.div`
