@@ -33,3 +33,14 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+import React from 'react'
+
+export default function Filter() {
+  return (
+    <StyledFilter>
+      <FilterButton>All</FilterButton>
+      <FilterButton>No Discount</FilterButton>
+      <FilterButton>With Discount</FilterButton>
+    </StyledFilter>
+  )
+}

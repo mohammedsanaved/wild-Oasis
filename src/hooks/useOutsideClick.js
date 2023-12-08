@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 
 export function useOutsideClick(close, listenCapturing = true) {
-    
         const ref = useRef();
   useEffect(()=> {
     function handleClick(e) {

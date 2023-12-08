@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import styled from "styled-components";
@@ -37,6 +37,8 @@ const StyledList = styled.ul`
 
   right: ${(props) => props.position.x}px;
   top: ${(props) => props.position.y}px;
+  /* right: 12px; */
+  /* top: 100px; */
 `;
 
 const StyledButton = styled.button`
@@ -77,15 +79,22 @@ const Menus = ({children}) => {
 }
 const Toggle =({id})=>  {
   const {close, open, openId, setPosition} = useContext(MenuContext);
+  const buttonRef = useRef(null);
+
   function handleToggle(e) {
+    // const button = buttonRef.current;
+    // if (!button) return;
+
     const rect = e.target.closest("button").getBoundingClientRect();
-    console.log(rect)
+    // const rect = button.getBoundingClientRect();
+    console.log("Rect value",rect)
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8
     })
     openId === '' || openId !== id ? open(id) : close();
   }
+
   return <StyledToggle onClick={handleToggle}>
     <FaEllipsisVertical />
   </StyledToggle>
@@ -100,6 +109,20 @@ const List =({id, children})=>  {
     <StyledList position={position} ref={ref}>{children}</StyledList>, document.body
   )
 }
+// -------------------------Stay with button
+// const List = ({ id, children }) => {
+//   const { openId, close, position } = useContext(MenuContext);
+//   const ref = useOutsideClick(close);
+
+//   if (openId !== id) return null;
+
+//   return (
+//     <StyledList position={position} ref={ref}>
+//       {children}
+//     </StyledList>
+//   );
+// };
+
 const Button =({children, icon, onClick})=> {
   const {close} = useContext(MenuContext);
   function handleClick() {
