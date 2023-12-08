@@ -12,6 +12,6 @@ export function useOutsideClick(close, listenCapturing = true) {
   }, [close, listenCapturing]);
   console.log("close is ==>",close)
 
-  console.log(ref)
+  console.log('ref =>',ref)
   return ref;
 }
