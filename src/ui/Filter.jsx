@@ -34,13 +34,20 @@ const FilterButton = styled.button`
   }
 `;
 import React from 'react'
+import { useSearchParams } from "react-router-dom";
 
-export default function Filter() {
+export default function Filter({filterField, options}) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentFilter = searchParams.get(filterField) || options.at(0).value
+  function handleClick(value) {
+    searchParams.set(filterField, value);
+    setSearchParams(searchParams);
+  }
   return (
     <StyledFilter>
-      <FilterButton>All</FilterButton>
-      <FilterButton>No Discount</FilterButton>
-      <FilterButton>With Discount</FilterButton>
+      {options?.map(option=> (
+      <FilterButton key={option.value} onClick={()=> handleClick(option.value)} active={option.value === currentFilter}>{option.label}</FilterButton>
+      ))}
     </StyledFilter>
   )
 }
