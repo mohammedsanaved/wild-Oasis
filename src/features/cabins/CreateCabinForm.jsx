@@ -9,10 +9,10 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 // import { createEditCabin } from "../../services/apiCabins";
-import  {useCreateCabin}  from "./useCreateCabin"
+import  {useCreateCabin}  from "./hooks/useCreateCabin"
 // import { ca } from "date-fns/locale";
 import FormRow from "../../ui/FormRow";
-import { useEditCabin } from "./useEditCabin";
+import { useEditCabin } from "./hooks/useEditCabin.js";
 const FormRow2 = styled.div`
   display: grid;
   align-items: center;
@@ -80,7 +80,6 @@ function CreateCabinForm({cabinToEdit = {},onCloseModel}) {
   }
   function onError(error) {
     console.warn(error)
-
   }
   return (
     <Form onSubmit={handleSubmit(submitHandler, onError)} type={onCloseModel ? "model" : "regular"}>

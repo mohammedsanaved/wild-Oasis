@@ -6,9 +6,9 @@ import {formatCurrency} from "../../utils/helpers"
 // import toast from "react-hot-toast";
 // import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
-import { useDeleteCabin } from "./useDeleteCabin";
+import { useDeleteCabin } from "./hooks/useDeleteCabin";
 import {HiDuplicate, HiPencil, HiTrash} from "react-icons/hi"
-import { useCreateCabin } from "./useCreateCabin";
+import { useCreateCabin } from "./hooks/useCreateCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete"
 import Table from "../../ui/Table";
@@ -93,15 +93,10 @@ const CabinRow = ({cabin}) => {
           <Modal.Open opens={'delete'}>
           <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
           </Modal.Open>
-            
           </Menus.List>
-          
-          
-
           <Modal.Window name={'edit'}>
           <CreateCabinForm cabinToEdit={cabin}/>
           </Modal.Window>
-          
           <Modal.Window name={'delete'}>
             <ConfirmDelete resourceName={'cabins'} disabled={isDeleting} onConfirm={()=> deleteCabin(cabinId)} />
           </Modal.Window>
