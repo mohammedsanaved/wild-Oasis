@@ -22,7 +22,7 @@ function App() {
       },
     },
   });
-  console.log(queryClient)
+  // console.log(queryClient)
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />

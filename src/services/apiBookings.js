@@ -1,14 +1,32 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
+import {PAGE_SIZE} from "../utils/constant"
 
+export async function getBookings({filter,sortBy,page}) {
+  // const {data, error} = await supabase.from("bookings").select("*, cabins(*), guests(*)");
+  //  let query = supabase.from("bookings").select("id,created_at,startDate,endDate,numNights,numGuests,totalPrice,status, cabins(name), guests(fullName,email)");
+   let query = supabase.from("bookings").select("id,created_at,startDate,endDate,numNights,numGuests,totalPrice,status, cabins(name), guests(fullName,email)",{count: "exact"});
+  console.log(query)
+  // FILTER
+   if(filter) query = query[filter.method || "eq"](filter.field, filter.value)
+   if(filter) query = query.eq(filter.field, filter.value)
+  //  SORTBY
+   if(sortBy) query = query.order(sortBy.field, {ascending: sortBy.direction === 'asc'})
+   if(page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = from + PAGE_SIZE -1;
+    query = query.range(from, to)
+   }
+   const {data, error,count} = await query;
+  //  const {data, error} = await query;
+   console.log("from Apibookings",data)
 
-export async function getBookings() {
-  const {data, error} = await supabase.from("bookings").select("*, cabins(*), guests(*)");
   if(error) {
     console.warn(error);
     throw new Error("Cabin data not found")
 }
-return data;
+return {data,count};
+// return data;
 }
 
 export async function getBooking(id) {
